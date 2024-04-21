@@ -8,7 +8,7 @@ import CryptoJS from 'crypto-js';
  * @param {any} echostr - 加密数据
  * @returns {Promise<string>} 签名
  */
-async function getSignature(token: any, timestamp: any, nonce: any, echostr: any): Promise<string> {
+async function getSignature(token: string, timestamp: string, nonce: string, echostr: string): Promise<string> {
     const data = new TextEncoder().encode([token, timestamp, nonce, echostr].sort().join(''));
     const hashBuffer = await crypto.subtle.digest('SHA-1', data);
     return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -22,12 +22,11 @@ async function getSignature(token: any, timestamp: any, nonce: any, echostr: any
  * @param nonceStr 随机字符串，长度为32个字符以下(可选)
  * @param timestamp 当前时间戳（单位：秒）(可选)
  */
-async function getJsApiSignature(jsapi_ticket: string, url: string, nonceStr?: string, timestamp?: number) {
+async function getJsApiSignature(jsapi_ticket: string, url: string, nonceStr?: string, timestamp?: number): Promise<string> {
      nonceStr = nonceStr || Math.random().toString(36).slice(2);
      timestamp = timestamp || Math.floor(Date.now() / 1000);
     const rawString = `jsapi_ticket=${jsapi_ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${url}`;
-    const js_api_signature = CryptoJS.SHA1(rawString).toString();
-    return js_api_signature;
+    return CryptoJS.SHA1(rawString).toString();
 }
 
 /**
@@ -69,7 +68,7 @@ async function getJsapiTicket(access_token: string): Promise<string> {
  * @param encodingAESKey EncodingAESKey
  * @param encryptTxt     密文
  */
-function decrypt(encodingAESKey: string, encryptTxt: string) {
+function decrypt(encodingAESKey: string, encryptTxt: string): { id: string, message: string, random: string } {
     const key = CryptoJS.enc.Base64.parse(encodingAESKey);
     const iv = CryptoJS.lib.WordArray.create(key.words.slice(0, 4));
     const encrypted = CryptoJS.enc.Base64.parse(encryptTxt);
@@ -82,8 +81,6 @@ function decrypt(encodingAESKey: string, encryptTxt: string) {
     const decoder = new TextDecoder();
     const bytes = new Uint8Array(latin1String.split('').map((char) => char.charCodeAt(0)));
     const utf8String = decoder.decode(bytes);
-    //  去掉前16随机字节和4个字节的msg_len
-    const message = utf8String.substring(16);
 
     return {
         id: utf8String.slice(utf8String.length - 18,utf8String.length ),
@@ -112,14 +109,12 @@ function encrypt(encodingAESKey: string, message: string , corpid: string, rando
     const rawStr = random + String.fromCharCode(...msgLength) + message + corpid;
 
     // 加密
-    const encrypted = CryptoJS.AES.encrypt(
+    // 将密文转化为Base64编码
+    return CryptoJS.AES.encrypt(
         rawStr,
         key,
-        { iv: iv }
+        {iv: iv}
     ).toString();
-
-    // 将密文转化为Base64编码
-    return encrypted;
 }
 
 export { getSignature, getJsApiSignature, getAccessToken, getJsapiTicket, decrypt, encrypt };

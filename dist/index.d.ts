@@ -4,10 +4,10 @@ import CryptoJS from 'crypto-js';
  * @param {any} token - 令牌
  * @param {any} timestamp - 时间戳
  * @param {any} nonce - 随机数
- * @param {any} encrypt - 加密数据
+ * @param {any} echostr - 加密数据
  * @returns {Promise<string>} 签名
  */
-declare function getSignature(token: any, timestamp: any, nonce: any, encrypt: any): Promise<string>;
+declare function getSignature(token: string, timestamp: string, nonce: string, echostr: string): Promise<string>;
 /**
  * 获取JS-SDK的签名，也就是被动回复消息里面的MsgSignature参数
  *

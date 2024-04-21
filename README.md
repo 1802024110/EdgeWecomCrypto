@@ -115,7 +115,6 @@ const message = `
 const corpid = "wwb230a336235c4ea"
 const encryptMsg = encrypt(encodingAESKey, message, corpid);
 console.log(encryptMsg);
-// 
 ```
 
 ---
@@ -159,5 +158,5 @@ console.log(encryptMsg);
 
 # 许可证
 
-该项目基于 MIT 许可证发布 - 请参阅 LICENSE 文件以获取更多信息。
+该项目基于 MIT 许可证发布 - 请参阅 [LICENSE](./LICENSE) 文件以获取更多信息。
 
