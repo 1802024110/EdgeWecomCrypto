@@ -5,11 +5,11 @@ import CryptoJS from 'crypto-js';
  * @param {any} token - 令牌
  * @param {any} timestamp - 时间戳
  * @param {any} nonce - 随机数
- * @param {any} encrypt - 加密数据
+ * @param {any} echostr - 加密数据
  * @returns {Promise<string>} 签名
  */
-async function getSignature(token: any, timestamp: any, nonce: any, encrypt: any): Promise<string> {
-    const data = new TextEncoder().encode([token, timestamp, nonce, encrypt].sort().join(''));
+async function getSignature(token: any, timestamp: any, nonce: any, echostr: any): Promise<string> {
+    const data = new TextEncoder().encode([token, timestamp, nonce, echostr].sort().join(''));
     const hashBuffer = await crypto.subtle.digest('SHA-1', data);
     return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
