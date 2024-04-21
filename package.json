@@ -1,0 +1,37 @@
+{
+  "name": "edgewecomcrypto",
+  "version": "1.0.0",
+  "description": "EdgeWeComCrypto is a library specifically rewritten for enterprise WeCom in edge computing, primarily focusing on message encryption, decryption, and domain validation. Leveraging Web standard APIs, it seamlessly operates on platforms such as Cloudflare Workers, Vercel, Deno, and BUN, ensuring secure transmission and validation of WeCom messages.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1802024110/EdgeWecomCrypto.git"
+  },
+  "keywords": [
+    "crypto",
+    "edge",
+    "cloudflare-workers",
+    "vercel",
+    "wecom",
+    "wecomcrypto"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/1802024110/EdgeWecomCrypto/issues"
+  },
+  "homepage": "https://github.com/1802024110/EdgeWecomCrypto#readme",
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
